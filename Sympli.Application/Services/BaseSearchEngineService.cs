@@ -92,6 +92,11 @@ public abstract class BaseSearchEngineService()
     {
         // Trim and replace http:// or https:// from url if present
         // This is to ensure that the URL is in the correct format for comparison
-        return url.Trim().Replace("http://www.", "").Replace("https://www.", "");
+        // Trim any trailing slashes
+        return url
+            .Trim()
+            .Replace("http://www.", "")
+            .Replace("https://www.", "")
+            .TrimEnd('/');
     }
 }
