@@ -4,6 +4,7 @@ using Sympli.Application.CQRS.Messaging;
 using Sympli.Application.Features.KeywordSearch.Contracts.Queries;
 using Sympli.Application.Features.KeywordSearch.Contracts.Views;
 using Sympli.Application.Services;
+using Sympli.WebAPI.Filters;
 
 namespace Sympli.WebAPI.Controllers
 {
@@ -25,6 +26,7 @@ namespace Sympli.WebAPI.Controllers
         /// <returns></returns>
         [HttpGet("google/sympli-seo-results", Name = "GetSympliSEOResultsFromGoogleSearch")]
         [ProducesResponseType(typeof(SEOResultsModel), StatusCodes.Status200OK)]
+        [ConcurrentRateLimiterFilter]
         public async Task<IActionResult> GetSympliSEOResultsFromGoogleSearch()
         {
             var result = await _dispatcher.DispatchAsync<SEOResultsModel>(new GetSympliSEOResultsFromGoogleSearchQuery());
